@@ -1,7 +1,4 @@
-import java.util.HashMap;
-import java.util.IllegalFormatException;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class RomanToArabic implements RomanToArabicConverter {
 
@@ -15,9 +12,19 @@ public class RomanToArabic implements RomanToArabicConverter {
         romanArabicPairs.put('X', 10);
         romanArabicPairs.put('V', 5);
         romanArabicPairs.put('I', 1);
-
-        romanArabicPairs.
     }
+
+    private int nextOf(int c) {
+        Iterator<Map.Entry<Character, Integer>> iterator = romanArabicPairs.entrySet().iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().getValue() == c && iterator.hasNext())
+                return iterator.next().getValue();
+            else
+                return c;
+        }
+        return 0;
+    }
+
 
     public int convertRomanToArabic(String romanNumber) {
         int result = 0;
@@ -27,15 +34,12 @@ public class RomanToArabic implements RomanToArabicConverter {
         for (int i = romanNumber.length() - 1; i > 0; i--) {
             int current = romanArabicPairs.get(romanNumber.charAt(i));
             int previous = romanArabicPairs.get(romanNumber.charAt(i - 1));
-            int previous = romanArabicPairs.get(romanNumber.charAt(i - 1));
-
-            if (current  result) throw new IllegalArgumentException();
+            if (result > current && result + current >= nextOf(current)) throw new IllegalArgumentException();
             if (previous < current) {
                 if (previous == current / 5 || previous == current / 10) {
                     result += current - previous;
                     i--;
-                }
-                else
+                } else
 
             }
 
